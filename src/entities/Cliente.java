@@ -11,6 +11,7 @@ public class Cliente {
 	String cpf;
 	String fone;
 	
+	public List<Livros> livrosAlugadosCliente = new ArrayList<>();
 	
 	public Cliente() {}
 
@@ -23,6 +24,10 @@ public class Cliente {
 	}
 
 	public int getIdCliente() {
+		return idCliente;
+	}
+	
+	public int setIdCliente() {
 		return idCliente;
 	}
 

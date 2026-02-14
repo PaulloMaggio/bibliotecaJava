@@ -23,6 +23,10 @@ public class Funcionario {
 	public int getIdFuncionario() {
 		return idFuncionario;
 	}
+	
+	public int setIdFuncionario() {
+		return idFuncionario;
+	}
 
 	public String getNome() {
 		return nome;

@@ -11,7 +11,7 @@ public class Estoque {
     public Estoque() {
     }
 
-    public int gerarId() {
+    public int gerarIdLivro() {
         return livros.stream()
                 .mapToInt(Livros::getIdLivro)
                 .max()
@@ -21,7 +21,7 @@ public class Estoque {
     public void addLivro(String titulo, String autor, String genero, Date ano, String statusStr) {
         Livros livro = new Livros();
         
-        livro.setIdLivro(gerarId());
+        livro.setIdLivro(gerarIdLivro());
         livro.setTitulo(titulo);
         livro.setAutor(autor);
         livro.setGenero(genero);
@@ -84,5 +84,15 @@ public class Estoque {
 
     public List<Livros> getLivros() {
         return livros;
+    }
+    
+    public List<Livros> livrosDisponiveis() {
+    	List<Livros> livrosDisponiveis = new ArrayList<>();
+    	for (Livros livro : livros) {
+    		if (livro.status == Status.DISPONIVEL) {
+    			livrosDisponiveis.add(livro);
+    		}
+    	}
+    	return livrosDisponiveis;
     }
 }
