@@ -130,12 +130,12 @@ public class Program {
                 	String dataFormatada =dataAluguel.format(formatador);
                 	
                 	System.out.println("Funcionario que alugou: ");
-                	String idfuncionarioAlugou = sc.nextLine();
+                	int idfuncionarioAlugou = sc.nextInt();
                 	
                 	System.out.println("ID do Cliente: ");
                 	int idClienteAlugou = sc.nextInt();
                 	
-                	aluguel.retirarLivro(idClienteAlugou, dataFormatada, idfuncionarioAlugou, idClienteAlugou);
+                	aluguel.retirarLivro(idLivroAlugado, idClienteAlugou, dataFormatada, idfuncionarioAlugou);
                 	
                 	break;
 

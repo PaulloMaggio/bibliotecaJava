@@ -11,25 +11,16 @@ import entities.Livros;
 import entities.Status;
 
 public class Aluguel {
-
-	Funcionario funcionario;
+	Livros livro;
 	Cliente cliente;
-
-	List<Livros> livrosAlugados = new ArrayList<>();
-	Estoque estoque = new Estoque();
-
-	public Aluguel() {
-	}
-
-	public void retirarLivro(int id, Date dataRetirada, String func, Cliente cliente) {
-		try {
-			for (Livros livro : estoque.livrosDisponiveis()) {
-				if (livro.getIdLivro() == id) {
-					livro.setStatus(Status.ALUGADO);
-				}
-			}
-		} catch (RuntimeException e) {
-			System.out.println("ID não encontrado!");
-		}
+	Date dataRetirada;
+	Date devolucao;
+	Funcionario func;
+	
+	AluguelService aluguelService = new AluguelService();
+	
+	public Aluguel retirarLivro(int idLivro, int idCliente, Date data, int idFunc) {
+			int idLivroValido = aluguelService.validaLivro();	
+				
 	}
 }

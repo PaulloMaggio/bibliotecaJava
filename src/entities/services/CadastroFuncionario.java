@@ -21,13 +21,13 @@ public class CadastroFuncionario {
         listaFuncionarios.add(cliente);
     }
 
-    public List<Funcionario> getListaClientes() {
+    public List<Funcionario> getListaFuncionarios() {
         return new ArrayList<>(listaFuncionarios);
     }
 
-    public void listarClientes() {
+    public void listarFuncionarios() {
         if (listaFuncionarios.isEmpty()) {
-            System.out.println("Nenhum cliente cadastrado.");
+            System.out.println("Nenhum funcionario cadastrado.");
         } else {
             listaFuncionarios.forEach(System.out::println);
         }
