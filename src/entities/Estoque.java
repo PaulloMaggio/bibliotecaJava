@@ -4,92 +4,85 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-public class Estoque extends Livros {
+public class Estoque {
 
-	public List<Livros> estoque = new ArrayList<>();
+    private List<Livros> livros = new ArrayList<>();
 
-	public Estoque() {
-	};
+    public Estoque() {
+    }
 
-	public Estoque(int idLivro, String titulo, String autor, String genero, Date ano, Status status,
-			List<Livros> estoque) {
-		super(idLivro, titulo, autor, genero, ano, status);
-		this.estoque = estoque;
-	}
+    public int gerarId() {
+        return livros.stream()
+                .mapToInt(Livros::getIdLivro)
+                .max()
+                .orElse(0) + 1;
+    }
 
-	public int gerarId() {
-	    if (estoque != null && !estoque.isEmpty()) {
-	        int ultimoId = estoque.get(estoque.size() - 1).getIdLivro();
-	        this.idLivro = ultimoId + 1;
-	    } else {
-	        this.idLivro = 1;
-	    }
-	    return idLivro;
-	}
+    public void addLivro(String titulo, String autor, String genero, Date ano, String statusStr) {
+        Livros livro = new Livros();
+        
+        livro.setIdLivro(gerarId());
+        livro.setTitulo(titulo);
+        livro.setAutor(autor);
+        livro.setGenero(genero);
+        livro.setAno(ano);
 
-	public void addLivro(int idLivro, String titulo, String autor, String genero, Date ano, String status) {
-		Livros livro = new Livros();
+        try {
+            livro.setStatus(Status.valueOf(statusStr.toUpperCase()));
+            livros.add(livro);
+            System.out.println("\nLivro adicionado com sucesso! ID: " + livro.getIdLivro());
+        } catch (IllegalArgumentException e) {
+            System.out.println("\nErro: Status inválido.");
+        }
+    }
 
-		livro.setIdLivro(idLivro);
-		livro.titulo = titulo;
-		livro.autor = autor;
-		livro.genero = genero;
-		livro.ano = ano;
+    public void listaLivros() {
+        if (livros.isEmpty()) {
+            System.out.println("\nNenhum livro cadastrado!");
+        } else {
+            System.out.println("\n--- Lista de Livros ---");
+            livros.forEach(System.out::println);
+        }
+    }
 
-		if (status.equals("DISPONIVEL")) {
-			livro.status = Status.DISPONIVEL;
-		} else if (status.equals("ALUGADO")) {
-			livro.status = Status.ALUGADO;
-		} else if (status.equals("ESGOTADO")) {
-			livro.status = Status.ESGOTADO;
-		}else {System.out.println("Entre com um Status Valido: Disponivel, Alugado, Sem estoque!");
-		}
-		estoque.add(livro);
-		System.out.println(" ");
-		System.out.println("Livro adicionado com sucesso!");
-	}
+    public void editarLivro(int idLivro, String titulo, String autor, String genero, Date ano, String statusStr) {
+        boolean encontrado = false;
 
-	public void listaLivros() {
-		if (estoque != null && !estoque.isEmpty()) {
-			for (Livros livro : estoque) {
-				System.out.println(livro);
-			}
-		}
-		else{
-			System.out.println("Nenhum livro cadastrado!");
-		}
-	}
-	
-	public List<Livros> editarLivro(int idLivro, String titulo, String autor, String genero, Date ano, String status) {
-	    boolean encontrado = false;
+        for (Livros livro : livros) {
+            if (livro.getIdLivro() == idLivro) {
+                livro.setTitulo(titulo);
+                livro.setAutor(autor);
+                livro.setGenero(genero);
+                livro.setAno(ano);
 
-	    if (estoque != null && !estoque.isEmpty()) {
-	        for (Livros livro : estoque) {
-	            if (livro.getIdLivro() == idLivro) {
-	               
-	                livro.setTitulo(titulo); 
-	                livro.setAutor(autor);
-	                livro.setGenero(genero);
-	                livro.setAno(ano);
+                try {
+                    livro.setStatus(Status.valueOf(statusStr.toUpperCase()));
+                } catch (IllegalArgumentException e) {
+                    System.out.println("\nStatus inválido!");
+                }
+                
+                encontrado = true;
+                System.out.println("\nLivro editado com sucesso!");
+                break;
+            }
+        }
 
-	               
-	                try {
-	                    livro.setStatus(Status.valueOf(status.toUpperCase()));
-	                } catch (IllegalArgumentException e) {
-	                    System.out.println("Status inválido! Use: DISPONIVEL, ALUGADO ou ESGOTADO.");
-	                }
+        if (!encontrado) {
+            System.out.println("\nID " + idLivro + " não encontrado.");
+        }
+    }
 
-	                System.out.println("\nLivro editado com sucesso!");
-	                encontrado = true;
-	                break; 
-	            }
-	        }
-	    }
+    public void deleteLivro(int id) {
+        boolean removido = livros.removeIf(l -> l.getIdLivro() == id);
 
-	    if (!encontrado) {
-	        System.out.println("Livro com ID " + idLivro + " não encontrado.");
-	    }
+        if (removido) {
+            System.out.println("\nLivro removido com sucesso!");
+        } else {
+            System.out.println("\nID não encontrado.");
+        }
+    }
 
-	    return estoque;
-	}
+    public List<Livros> getLivros() {
+        return livros;
+    }
 }

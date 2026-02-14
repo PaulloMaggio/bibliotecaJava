@@ -4,101 +4,95 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Scanner;
-
 import entities.Estoque;
-import entities.Livros;
 
 public class Program {
 
-	public static void main(String[] args) throws ParseException {
-		Scanner sc = new Scanner(System.in);
-		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+    public static void main(String[] args) throws ParseException {
+        Scanner sc = new Scanner(System.in);
+        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+        Estoque estoque = new Estoque();
 
-		Estoque estoque = new Estoque();
+        boolean rodando = true;
+        while (rodando) {
+            System.out.println("\n======================");
+            System.out.println("Bem-vindo a Biblioteca");
+            System.out.println("======================");
+            System.out.println("1 - Adicionar Livro");
+            System.out.println("2 - Alugar livro (Em breve)");
+            System.out.println("3 - Listar Livros");
+            System.out.println("4 - Editar livro");
+            System.out.println("5 - Excluir livro");
+            System.out.println("6 - Sair");
+            System.out.print("\nEscolha uma opção: ");
+            
+            String op = sc.nextLine(); 
 
-		boolean rodando = true;
-		while (rodando == true) {
-			System.out.println(" ");
-			System.out.println("======================");
-			System.out.println("Bem-vindo a Biblioteca");
-			System.out.println("======================");
+            switch (op) {
+                case "1":
+                    System.out.print("Título: ");
+                    String titulo = sc.nextLine();
+                    System.out.print("Autor: ");
+                    String autor = sc.nextLine();
+                    System.out.print("Gênero: ");
+                    String genero = sc.nextLine();
+                    System.out.print("Data (dd/MM/yyyy): ");
+                    Date ano = sdf.parse(sc.nextLine());
+                    System.out.print("Status (DISPONIVEL, ALUGADO, ESGOTADO): ");
+                    String status = sc.nextLine();
 
-			System.out.print(" ");
-			System.out.println("1 - Adicionar Livro: ");
-			System.out.println("2 - Alugar livro");
-			System.out.println("3 - Listar Livros");
-			System.out.println("4 - Editar livro");
-			System.out.println("5 - Excluir livro ");
-			System.out.println("6 - Sair");
+                    estoque.addLivro(titulo, autor, genero, ano, status);
+                    break;
 
-			System.out.println(" ");
-			System.out.print("Escolha uma opção: ");
-			String op = sc.next().toUpperCase();
+                case "2":
+                    System.out.println("Funcionalidade em desenvolvimento...");
+                    break;
 
-			switch (op) {
-			case "1":
-				System.out.println("Digite o Titulo do livro: ");
-				String titulo = sc.next();
+                case "3":
+                    estoque.listaLivros();
+                    break;
 
-				System.out.println("Digite o Autor do livro: ");
-				String autor = sc.next();
+                case "4":
+                    if (estoque.getLivros().isEmpty()) {
+                        System.out.println("Estoque vazio!");
+                    } else {
+                        try {
+                            System.out.print("ID do livro: ");
+                            int id = Integer.parseInt(sc.nextLine());
+                            System.out.print("Novo Título: ");
+                            String nt = sc.nextLine();
+                            System.out.print("Novo Autor: ");
+                            String na = sc.nextLine();
+                            System.out.print("Novo Gênero: ");
+                            String ng = sc.nextLine();
+                            System.out.print("Nova Data (dd/MM/yyyy): ");
+                            Date nAno = sdf.parse(sc.nextLine());
+                            System.out.print("Novo Status: ");
+                            String ns = sc.nextLine();
 
-				System.out.println("Digite o Genero do livro: ");
-				String genero = sc.next();
+                            estoque.editarLivro(id, nt, na, ng, nAno, ns);
+                        } catch (NumberFormatException e) {
+                            System.out.println("Erro: Digite um número válido para o ID.");
+                        }
+                    }
+                    break;
 
-				System.out.println("Digite a data de lançamento do livro: ");
-				sc.nextLine();
-				Date ano = sdf.parse(sc.nextLine());
+                case "5":
+                    System.out.print("ID para excluir: ");
+                    int idExcluir = Integer.parseInt(sc.nextLine());
+                    estoque.deleteLivro(idExcluir);
+                    break;
 
-				System.out.println("Qual o Status do livro: ");
-				String status = sc.next().toUpperCase();
+                case "6":
+                    rodando = false;
+                    System.out.println("Encerrando...");
+                    break;
 
-				estoque.addLivro(estoque.gerarId(), titulo, autor, genero, ano, status);
-				break;
-			case "2":
-				break;
-
-			case "3":
-				System.out.println(" ");
-				System.out.println("Livros no estoque: ");
-				System.out.println(" ");
-				estoque.listaLivros();
-				break;
-
-			case "4":
-				System.out.println(" ");
-				if (estoque.estoque.isEmpty()) { 
-				    System.out.println("O estoque está vazio! Cadastre um livro primeiro.");
-				} else {
-					try {
-						System.out.println("\nDigite o ID do livro a ser editado: ");
-						int id = sc.nextInt();
-						sc.nextLine(); 
-
-						System.out.println("Digite o Titulo do livro: ");
-						String novoTitulo = sc.nextLine();
-
-						System.out.println("Digite o Autor do livro: ");
-						String novoAutor = sc.nextLine();
-
-						System.out.println("Digite o Genero do livro: ");
-						String novoGenero = sc.nextLine();
-
-						System.out.println("Digite a data (dd/MM/yyyy): ");
-						Date novoAno = sdf.parse(sc.nextLine());
-
-						System.out.println("Qual o Status do livro: ");
-						String novoStatus = sc.nextLine().toUpperCase();
-
-						
-						estoque.editarLivro(id, novoTitulo, novoAutor, novoGenero, novoAno, novoStatus);
-
-					} catch (ParseException e) {
-						System.out.println("Erro: Data inválida!");
-					}
-				} 
-				break; 
-			}
-		}
-	}
+                default:
+                    System.out.println("Opção inválida!");
+                    break;
+            }
+        }
+        sc.close();
+    }
 }
