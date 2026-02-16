@@ -17,8 +17,10 @@ public class CadastroFuncionario {
 	
     public void cadastrarFuncionario(String nome, String cpf, String fone) {
         int novoId = gerarIdFuncionario();
-        Funcionario cliente = new Funcionario(novoId, nome, cpf, fone);
-        listaFuncionarios.add(cliente);
+        Funcionario funcionario = new Funcionario(novoId, nome, cpf, fone);
+        listaFuncionarios.add(funcionario);
+        System.out.println(" ");
+        System.out.println("Funcionario adicionado com sucesso com id: " + funcionario.getIdFuncionario());
     }
 
     public List<Funcionario> getListaFuncionarios() {

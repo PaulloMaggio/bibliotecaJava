@@ -3,7 +3,6 @@ package entities.services;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-
 import entities.Cliente;
 import entities.Estoque;
 import entities.Funcionario;
@@ -18,9 +17,15 @@ public class AluguelService {
 	public static Cliente clienteAluguel;
 
 	List<Livros> livrosAlugados = new ArrayList<>();
-	Estoque estoque = new Estoque();
-	CadastroFuncionario cadastroFunc = new CadastroFuncionario();
-	CadastroCliente cadastroCliente = new CadastroCliente();
+	Estoque estoque;
+	CadastroFuncionario cadastroFunc;
+	CadastroCliente cadastroCliente;
+
+	public AluguelService(Estoque estoque, CadastroFuncionario cadastroFunc, CadastroCliente cadastroCliente) {
+		this.estoque = estoque;
+		this.cadastroFunc = cadastroFunc;
+		this.cadastroCliente = cadastroCliente;
+	}
 
 	public Livros validaLivro(int idLivro) {
 		try {
@@ -42,7 +47,6 @@ public class AluguelService {
 				return funcionario;
 			}
 		}
-
 		System.out.println("Funcionário com ID " + idFunc + " não encontrado.");
 		return null;
 	}
@@ -51,14 +55,12 @@ public class AluguelService {
 		try {
 			for (Cliente cliente : cadastroCliente.getListaClientes()) {
 				if (cliente.getIdCliente() == idCliente) {
-					String nomeFunc = cliente.getNome();
 					return cliente;
-					}
+				}
 			}
-		}catch (RuntimeException e) {
+		} catch (RuntimeException e) {
 			System.out.println("ID não encontrado!");
 		}
 		return null;
-		
-}
+	}
 }

@@ -19,6 +19,8 @@ public class CadastroCliente {
         int novoId = gerarIdCliente();
         Cliente cliente = new Cliente(novoId, nome, cpf, fone);
         listaClientes.add(cliente);
+        System.out.println(" ");
+        System.out.println("Cliente adicionado com sucesso com ID: " + cliente.getIdCliente());
     }
 
     public List<Cliente> getListaClientes() {
