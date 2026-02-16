@@ -79,4 +79,8 @@ public class Aluguel {
             listaAluguel.forEach(System.out::println);
         }
     }
+    
+    public List<Aluguel> getListaAluguel() {
+        return new ArrayList<>(listaAluguel);
+    }
 }

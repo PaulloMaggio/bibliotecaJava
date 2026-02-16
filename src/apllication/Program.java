@@ -58,12 +58,18 @@ public class Program {
                     cliente.listarClientes();
                     break;
                 case "5" :
+                	System.out.println("Digite o ID do cliente: ");
+                	int idCliente = sc.nextInt();
+                	sc.nextLine();
+                	cliente.procurarCliente(idCliente, aluguel.getListaAluguel());
+                	break;
+                case "6" :
                     aluguel.listarAlugueis();
                     break;
-                case "6":
+                case "7":
                     menuDeLivros(); 
                     break;
-                case "7":
+                case "8":
                     rodandoSistema = false;
                     System.out.println("Saindo...");
                     break;
@@ -81,9 +87,10 @@ public class Program {
         System.out.println("2 - Adicionar Cliente");
         System.out.println("3 - Listar Funcionarios");
         System.out.println("4 - Listar Clientes");
-        System.out.println("5 - Listar alugueis");
-        System.out.println("6 - Menu de Livros");
-        System.out.println("7 - Sair");
+        System.out.println("5 - Procurar Cliente");
+        System.out.println("6 - Listar alugueis");
+        System.out.println("7 - Menu de Livros");
+        System.out.println("8 - Sair");
     }
 
     public static void menuDeLivros() {
