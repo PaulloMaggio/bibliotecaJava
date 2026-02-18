@@ -17,7 +17,6 @@ public class Program {
 
     static Scanner sc = new Scanner(System.in);
     static SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
-    static LocalDateTime dataAluguel = LocalDateTime.now();
     static DateTimeFormatter formatador = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss");
     static Estoque estoque = new Estoque();
     static CadastroCliente cliente = new CadastroCliente();
@@ -51,25 +50,25 @@ public class Program {
                     String fone = sc.nextLine();
                     cliente.cadastrarCliente(nome, cpf, fone);
                     break;
-                case "3" :
+                case "3":
                     funcionario.listarFuncionarios();
                     break;
-                case "4" :
+                case "4":
                     cliente.listarClientes();
                     break;
-                case "5" :
-                	System.out.println("Digite o ID do cliente: ");
-                	int idCliente = sc.nextInt();
-                	sc.nextLine();
-                	cliente.procurarCliente(idCliente, aluguel.getListaAluguel());
-                	break;
-                case "6" :
+                case "5":
+                    System.out.print("Digite o ID do cliente: ");
+                    int idCliente = sc.nextInt();
+                    sc.nextLine(); 
+                    cliente.procurarCliente(idCliente, aluguel.getListaAluguel());
+                    break;
+                case "6":
                     aluguel.listarAlugueis();
                     break;
                 case "7":
                     menuDeLivros(); 
                     break;
-                case "8":
+                case "0":
                     rodandoSistema = false;
                     System.out.println("Saindo...");
                     break;
@@ -90,7 +89,7 @@ public class Program {
         System.out.println("5 - Procurar Cliente");
         System.out.println("6 - Listar alugueis");
         System.out.println("7 - Menu de Livros");
-        System.out.println("8 - Sair");
+        System.out.println("0 - Sair");
     }
 
     public static void menuDeLivros() {
@@ -99,9 +98,10 @@ public class Program {
             System.out.println("\n--- MENU DE LIVROS ---");
             System.out.println("1 - Adicionar Livro");
             System.out.println("2 - Alugar Livro");
+            System.out.println("3 - Devolver livro alugado");
             System.out.println("4 - Listar Todos");
             System.out.println("5 - Livros Disponíveis");
-            System.out.println("8 - Voltar");
+            System.out.println("0 - Voltar");
             System.out.print("Escolha: ");
             
             String op = sc.nextLine();
@@ -121,18 +121,26 @@ public class Program {
                         String statusStr = sc.nextLine();
                         estoque.addLivro(titulo, autor, genero, ano, statusStr);
                     } catch (ParseException e) {
-                        System.out.println("Erro: Formato de data inválido! Use dd/MM/yyyy.");
+                        System.out.println("Erro: Formato de data inválido!");
                     }
                     break;
-                case "2" :
+                case "2":
                     System.out.print("ID Livro: ");
                     int idL = sc.nextInt();
                     System.out.print("ID Cliente: ");
                     int idC = sc.nextInt();
                     System.out.print("ID Func: ");
                     int idF = sc.nextInt();
-                    sc.nextLine(); // Limpa o buffer
+                    sc.nextLine(); 
                     aluguel.retirarLivro(idL, idC, LocalDateTime.now().format(formatador), statusDevolucao.PENDENTE, idF);
+                    break;
+                case "3":
+                    System.out.print("ID do Aluguel: ");
+                    int idAluguel = sc.nextInt();
+                    System.out.print("ID do Livro: ");
+                    int idLivro = sc.nextInt();
+                    sc.nextLine(); 
+                    aluguel.devolverLivro(idAluguel, idLivro, LocalDateTime.now().format(formatador));
                     break;
                 case "4":
                     estoque.listaLivros();
@@ -143,7 +151,7 @@ public class Program {
                         System.out.println(l);
                     }
                     break;
-                case "8":
+                case "0":
                     rodandoMenuLivros = false;
                     break;
                 default:

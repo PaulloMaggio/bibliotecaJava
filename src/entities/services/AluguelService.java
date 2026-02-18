@@ -16,7 +16,7 @@ public class AluguelService {
 	public static Funcionario funcionarioAluguel;
 	public static Cliente clienteAluguel;
 
-	List<Livros> livrosAlugados = new ArrayList<>();
+	List<Aluguel> listaAlugueis = new ArrayList<>();
 	Estoque estoque;
 	CadastroFuncionario cadastroFunc;
 	CadastroCliente cadastroCliente;
@@ -26,6 +26,13 @@ public class AluguelService {
 		this.cadastroFunc = cadastroFunc;
 		this.cadastroCliente = cadastroCliente;
 	}
+	
+	public int gerarIdAluguel() {
+	        return listaAlugueis.stream()
+	                .mapToInt(Aluguel::getIdAluguel)
+	                .max()
+	                .orElse(0) + 1;
+	    }
 
 	public Livros validaLivro(int idLivro) {
 		try {
